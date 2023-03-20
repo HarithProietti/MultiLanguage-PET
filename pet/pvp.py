@@ -610,6 +610,11 @@ class RtePVP(PVP):
             return [text_b, '?'], [self.mask, '.', text_a]
         elif self.pattern_id == 4:
             return [text_a, ' question: ', self.shortenable(example.text_b), ' True or False? answer:', self.mask], []
+        elif self.pattern_id == 5:
+            return [text_a], ['Considering this information, can we convincingly and reasonably deduce that ', text_a, '?', self.mask ]
+        elif self.pattern_id == 6:
+            return ['Let us assume the following', ': ', text_a], ['If the latter is true, should we assume that ', text_b, '?', self.mask]
+
 
     def verbalize(self, label) -> List[str]:
         if self.pattern_id == 4:
