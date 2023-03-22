@@ -661,11 +661,15 @@ class CopaPVP(PVP):
                 return ['"', choice1, '" or "', choice2, '"?', premise, 'because', self.mask * num_masks, '.'], []
             elif self.pattern_id == 1:
                 return [choice1, 'or', choice2, '?', premise, 'because', self.mask * num_masks, '.'], []
+            elif self.pattern_id == 2:
+                return ['Let us consider the two following assumptions: ', choice1, 'and', choice2, '.', 'If we consider that', premise, 'which one of both assumptions is true', '?', self.mask * num_masks], []
         else:
             if self.pattern_id == 0:
                 return ['"', choice1, '" or "', choice2, '"?', premise, ', so', self.mask * num_masks, '.'], []
             elif self.pattern_id == 1:
                 return [choice1, 'or', choice2, '?', premise, ', so', self.mask * num_masks, '.'], []
+            elif self.pattern_id == 2:
+                return ['Let us consider the two following assumptions: ', choice1, 'and', choice2, '.', 'If we consider that', premise, 'which one of both caused it', '?', self.mask * num_masks], []
 
     def verbalize(self, label) -> List[str]:
         return []
@@ -749,6 +753,10 @@ class MultiRcPVP(PVP):
                     self.mask, '.'], []
         if self.pattern_id == 3:
             return [passage, question, '- [', self.mask, ']', answer], []
+        if self.pattern_id == 4:
+            return ['Let us consider the following passage: ', passage, '. ', 'Can we correctly infer that ', answer, ' is a valid answer to the question: ', question, '?', self.mask, '.']
+        if self.pattern_id == 5:
+            return ['Suppose we are interested in the following question: ', question, '? ', 'If we know that: ', passage, ' ', 'can we conclude that ', answer, 'is a correct answer to the previous question', '?', self.mask, '.']
 
     def verbalize(self, label) -> List[str]:
         if self.pattern_id == 3:
