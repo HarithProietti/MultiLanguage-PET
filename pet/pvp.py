@@ -610,6 +610,7 @@ class RtePVP(PVP):
             return [text_b, '?'], [self.mask, '.', text_a]
         elif self.pattern_id == 4:
             return [text_a, ' question: ', self.shortenable(example.text_b), ' True or False? answer:', self.mask], []
+        ### Patterns 5 and 6 added
         elif self.pattern_id == 5:
             return [text_a], ['Considering this information, can we convincingly and reasonably deduce that ', text_a, '?', self.mask ]
         elif self.pattern_id == 6:
@@ -661,6 +662,7 @@ class CopaPVP(PVP):
                 return ['"', choice1, '" or "', choice2, '"?', premise, 'because', self.mask * num_masks, '.'], []
             elif self.pattern_id == 1:
                 return [choice1, 'or', choice2, '?', premise, 'because', self.mask * num_masks, '.'], []
+            ### Pattern 2 added
             elif self.pattern_id == 2:
                 return ['Let us consider the two following assumptions: ', choice1, 'and', choice2, '.', 'If we consider that', premise, 'which one of both assumptions is true', '?', self.mask * num_masks], []
         else:
@@ -668,6 +670,7 @@ class CopaPVP(PVP):
                 return ['"', choice1, '" or "', choice2, '"?', premise, ', so', self.mask * num_masks, '.'], []
             elif self.pattern_id == 1:
                 return [choice1, 'or', choice2, '?', premise, ', so', self.mask * num_masks, '.'], []
+            ### Pattern 2 added
             elif self.pattern_id == 2:
                 return ['Let us consider the two following assumptions: ', choice1, 'and', choice2, '.', 'If we consider that', premise, 'which one of both caused it', '?', self.mask * num_masks], []
 
@@ -753,6 +756,7 @@ class MultiRcPVP(PVP):
                     self.mask, '.'], []
         if self.pattern_id == 3:
             return [passage, question, '- [', self.mask, ']', answer], []
+        ### Patterns 4 and 5 added
         if self.pattern_id == 4:
             return ['Let us consider the following passage: ', passage, '. ', 'Can we correctly infer that ', answer, ' is a valid answer to the question: ', question, '?', self.mask, '.']
         if self.pattern_id == 5:
