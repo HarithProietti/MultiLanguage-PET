@@ -612,7 +612,7 @@ class RtePVP(PVP):
             return [text_a, ' question: ', self.shortenable(example.text_b), ' True or False? answer:', self.mask], []
         ### Patterns 5 and 6 added
         elif self.pattern_id == 5:
-            return [text_a], ['Considering this information, can we convincingly and reasonably deduce that ', text_a, '?', self.mask ]
+            return [text_a], ['Considering this information, can we convincingly and reasonably deduce that ', text_b, '?', self.mask ]
         elif self.pattern_id == 6:
             return ['Let us assume the following', ': ', text_a], ['If the latter is true, should we assume that ', text_b, '?', self.mask]
 
@@ -664,7 +664,8 @@ class CopaPVP(PVP):
                 return [choice1, 'or', choice2, '?', premise, 'because', self.mask * num_masks, '.'], []
             ### Pattern 2 added
             elif self.pattern_id == 2:
-                return ['Let us consider the two following assumptions: ', choice1, 'and', choice2, '.', 'If we consider that', premise, 'which one of both assumptions is true', '?', self.mask * num_masks], []
+                return ['Let us consider the two following assumptions: ', choice1, 'and', choice2, '.', 'If we consider that', premise, 'which one of the two assumptions caused it', '?', self.mask * num_masks], []
+
         else:
             if self.pattern_id == 0:
                 return ['"', choice1, '" or "', choice2, '"?', premise, ', so', self.mask * num_masks, '.'], []
@@ -672,7 +673,7 @@ class CopaPVP(PVP):
                 return [choice1, 'or', choice2, '?', premise, ', so', self.mask * num_masks, '.'], []
             ### Pattern 2 added
             elif self.pattern_id == 2:
-                return ['Let us consider the two following assumptions: ', choice1, 'and', choice2, '.', 'If we consider that', premise, 'which one of both caused it', '?', self.mask * num_masks], []
+                return ['Let us consider the two following assumptions: ', choice1, 'and', choice2, '.', 'If we consider that', premise, 'which one of the two assumptions is true', '?', self.mask * num_masks], []
 
     def verbalize(self, label) -> List[str]:
         return []
