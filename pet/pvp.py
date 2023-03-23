@@ -759,9 +759,9 @@ class MultiRcPVP(PVP):
             return [passage, question, '- [', self.mask, ']', answer], []
         ### Patterns 4 and 5 added
         if self.pattern_id == 4:
-            return ['Let us consider the following passage: ', passage, '. ', 'Can we correctly infer that ', answer, ' is a valid answer to the question: ', question, '?', self.mask, '.']
+            return ['Let us consider the following passage: ', passage, '. ', 'Can we correctly infer that ', answer, ' is a valid answer to the question: ', question, '?', self.mask, '.'], []
         if self.pattern_id == 5:
-            return ['Suppose we are interested in the following question: ', question, '? ', 'If we know that: ', passage, ' ', 'can we conclude that ', answer, 'is a correct answer to the previous question', '?', self.mask, '.']
+            return ['Suppose we are interested in the following question: ', question, '? ', 'If we know that: ', passage, ' ', 'can we conclude that ', answer, 'is a correct answer to the previous question', '?', self.mask, '.'], []
 
     def verbalize(self, label) -> List[str]:
         if self.pattern_id == 3:
