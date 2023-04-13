@@ -1,5 +1,5 @@
 
-# Arapet - Arabic version of Pattern-Exploiting Training (PET)
+# MultiLanguage-PET - MultiLanguage Repo Pattern-Exploiting Training (PET)
 
 Try infernce via Colab!
 
