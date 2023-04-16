@@ -260,6 +260,104 @@ class PVP(ABC):
 
         return verbalize
 
+class ArabicIsPersonalPVP(PVP):
+    VERBALIZER = {
+        "no_ref": ["المنشور"],
+        "is_personal": ["الكاتب"],
+    }
+    def get_parts(self, example: InputExample) -> FilledPattern:
+
+        text_a = self.shortenable(example.text_a)
+        text_b = self.shortenable(example.text_b)
+        responser = "المستجيب"
+        writer = "كاتب"
+        The_responser_talks_about = " يتحدث المستجيب عن "
+
+        if self.pattern_id == 0:
+            return [writer, ':', text_a,'.', responser, ':',text_b,'. ',The_responser_talks_about,  self.mask], []
+        elif self.pattern_id == 1:
+            return [writer, ':', text_a,'.', responser, ':',text_b,'.'], [The_responser_talks_about,  self.mask]
+        elif self.pattern_id == 2:
+            return [writer, ':', text_a,'.'], [responser, ':',text_b,'.', The_responser_talks_about,  self.mask]
+        #elif self.pattern_id == 3:
+        #    return [text_a, text_b, '(', self.mask, ')'], []
+       # elif self.pattern_id == 4:
+       #     return ['[ Category:', self.mask, ']', text_a, text_b], []
+       # elif self.pattern_id == 5:
+      #     return [self.mask, '-', text_a, text_b], []
+        else:
+            raise ValueError("No pattern implemented for id {}".format(self.pattern_id))
+
+    def verbalize(self, label) -> List[str]:
+        return ArabicIsPersonalPVP.VERBALIZER[label]
+    
+
+class Arabic3classPVP(PVP):
+    VERBALIZER = {
+        "no_ref": ["-"],
+        "positive": ["يحب"], #loves
+        "negative": ["يكره"] #hates
+    }
+
+    def get_parts(self, example: InputExample) -> FilledPattern:
+
+        text_a = self.shortenable(example.text_a)
+        text_b = self.shortenable(example.text_b)
+        responser = "المستجيب"
+        writer = "كاتب"
+        topic = "عنوان"
+        
+        if self.pattern_id == 0:
+            return [writer, ':', text_a,'.', responser, ':',text_b,'.', responser, self.mask, writer], []
+        elif self.pattern_id == 1:
+            return [writer, ':', text_a,'.', responser, ':',text_b,'.'], [responser, self.mask, writer]
+        elif self.pattern_id == 2:
+            return [writer, ':', text_a,'.'], [responser, ':',text_b,'.', responser, self.mask, writer]
+        #elif self.pattern_id == 3:
+        #    return [text_a, text_b, '(', self.mask, ')'], []
+       # elif self.pattern_id == 4:
+       #     return ['[ Category:', self.mask, ']', text_a, text_b], []
+       # elif self.pattern_id == 5:
+      #     return [self.mask, '-', text_a, text_b], []
+        else:
+            raise ValueError("No pattern implemented for id {}".format(self.pattern_id))
+
+    def verbalize(self, label) -> List[str]:
+        return ArabicMulticlassPVP.VERBALIZER[label]
+    
+class ArabicMulticlassPVP(PVP):
+    VERBALIZER = {
+        "no_ref": ["-"],
+        "neutral": ["يخاطب"], #talk to #["المرجع"], #ref
+        "positive": ["يحب"], #loves
+        "negative": ["يكره"] #hates
+    }
+
+    def get_parts(self, example: InputExample) -> FilledPattern:
+
+        text_a = self.shortenable(example.text_a)
+        text_b = self.shortenable(example.text_b)
+        responser = "المستجيب"
+        writer = "كاتب"
+        topic = "عنوان"
+        
+        if self.pattern_id == 0:
+            return [writer, ':', text_a,'.', responser, ':',text_b,'.', responser, self.mask, writer], []
+        elif self.pattern_id == 1:
+            return [writer, ':', text_a,'.', responser, ':',text_b,'.'], [responser, self.mask, writer]
+        elif self.pattern_id == 2:
+            return [writer, ':', text_a,'.'], [responser, ':',text_b,'.', responser, self.mask, writer]
+        #elif self.pattern_id == 3:
+        #    return [text_a, text_b, '(', self.mask, ')'], []
+       # elif self.pattern_id == 4:
+       #     return ['[ Category:', self.mask, ']', text_a, text_b], []
+       # elif self.pattern_id == 5:
+      #     return [self.mask, '-', text_a, text_b], []
+        else:
+            raise ValueError("No pattern implemented for id {}".format(self.pattern_id))
+
+    def verbalize(self, label) -> List[str]:
+        return ArabicMulticlassPVP.VERBALIZER[label]
 
 class AgnewsPVP(PVP):
     VERBALIZER = {
@@ -647,6 +745,9 @@ class RecordPVP(PVP):
 
 
 PVPS = {
+    'arabic_3_class': Arabic3classPVP,
+    'arabic_is_personal': ArabicIsPersonalPVP,
+    'arabic_multilabel': ArabicMulticlassPVP,
     'agnews': AgnewsPVP,
     'mnli': MnliPVP,
     'yelp-polarity': YelpPolarityPVP,
