@@ -372,7 +372,45 @@ class AraMultilabelProcessor(DataProcessor):
 
         return examples
 
+class CLUEWSCProcessor(DataProcessor):
 
+    def get_train_examples(self, data_dir):
+        return self._create_examples(os.path.join(data_dir, "train.json"), "train")
+
+    def get_dev_examples(self, data_dir, for_train=False):
+        return self._create_examples(os.path.join(data_dir, "dev.json"), "dev")
+
+    def get_test_examples(self, data_dir) -> List[InputExample]:
+        return self._create_examples(os.path.join(data_dir, "test.json"), "test")
+
+    def get_labels(self):
+        return ["false", "true"]
+
+    def _create_examples(self, path: str, set_type: str, cloze_eval=True) -> List[InputExample]:
+        examples = []
+
+        with open(path, encoding='utf8') as f:
+            for line in f:
+                example_json = json.loads(line)
+                idx = example_json['id'] if 'id' in example_json else example_json['idx']
+                label = example_json['label'] if 'label' in example_json else None
+                guid = "%s-%s" % (set_type, idx)
+                text_a = example_json['text']
+
+                meta = {
+                    'span1_text': example_json['target']['span1_text'],
+                    'span2_text': example_json['target']['span2_text'],
+                    'span1_index': example_json['target']['span1_index'],
+                    'span2_index': example_json['target']['span2_index'],
+                }
+                meta['span1_length'] = len(meta['span1_text'])
+                meta['span2_length'] = len(meta['span2_text'])
+
+                example = InputExample(
+                    guid=guid, text_a=text_a, text_b=meta['span1_index'], label=label, meta=meta, idx=idx)
+                examples.append(example)
+
+        return examples
 
 class MnliProcessor(DataProcessor):
     """Processor for the MultiNLI data set (GLUE version)."""
@@ -1039,6 +1077,7 @@ PROCESSORS = {
     "record": RecordProcessor,
     "ax-g": AxGProcessor,
     "ax-b": AxBProcessor,
+    'cluewsc': CLUEWSCProcessor,
 }  # type: Dict[str,Callable[[],DataProcessor]]
 
 TASK_HELPERS = {
