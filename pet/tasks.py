@@ -383,6 +383,9 @@ class CLUEWSCProcessor(DataProcessor):
     def get_test_examples(self, data_dir) -> List[InputExample]:
         return self._create_examples(os.path.join(data_dir, "test.json"), "test")
 
+    def get_unlabeled_examples(self, data_dir) -> List[InputExample]:
+        return self._create_examples(os.path.join(data_dir, "test1.0.json"), "unlabeled")
+
     def get_labels(self):
         return ["false", "true"]
 
