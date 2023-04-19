@@ -29,7 +29,7 @@ from transformers import InputExample, AdamW, get_linear_schedule_with_warmup, P
     RobertaForMaskedLM, XLMRobertaForMaskedLM, XLNetConfig, XLNetForSequenceClassification, XLNetTokenizer, \
     XLNetLMHeadModel, BertConfig, BertForSequenceClassification, BertTokenizer, RobertaConfig, \
     RobertaForSequenceClassification, RobertaTokenizer, XLMRobertaConfig, XLMRobertaForSequenceClassification, \
-    XLMRobertaTokenizer, AlbertForSequenceClassification, AlbertForMaskedLM, AlbertTokenizer, AlbertConfig, \
+    XLMRobertaTokenizer, AlbertForSequenceClassification, AlbertForMaskedLM, AlbertTokenizer, AlbertTokenizerFast, AlbertConfig, \
     GPT2Config, GPT2LMHeadModel, GPT2Tokenizer
 from transformers import __version__ as transformers_version
 
@@ -87,6 +87,18 @@ MODEL_CLASSES = {
     'albert': {
         'config': AlbertConfig,
         'tokenizer': AlbertTokenizer,
+        SEQUENCE_CLASSIFIER_WRAPPER: AlbertForSequenceClassification,
+        MLM_WRAPPER: AlbertForMaskedLM
+    },
+    'albert-chinese': {
+        'config': AlbertConfig,
+        'tokenizer': BertTokenizer,
+        SEQUENCE_CLASSIFIER_WRAPPER: AlbertForSequenceClassification,
+        MLM_WRAPPER: AlbertForMaskedLM
+    },
+    'albert-chinese-v2': {
+        'config': AlbertConfig,
+        'tokenizer': BertTokenizerFast,
         SEQUENCE_CLASSIFIER_WRAPPER: AlbertForSequenceClassification,
         MLM_WRAPPER: AlbertForMaskedLM
     },
